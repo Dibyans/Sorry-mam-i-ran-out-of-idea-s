@@ -1,0 +1,50 @@
+<html>
+<head>
+	<title>Hospital Room Page</title>
+<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+
+<link href="https://fonts.googleapis.com/css?family=Yeon+Sung&display=swap" rel="stylesheet"><meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+
+
+<div class="container">
+	<button id="logout" onclick="logout();" class="glyphicon glyphicon-log-out btn btn-danger">Logout</button>
+
+	<center>
+		<h1  class="header">	
+			Hospital	
+			<sup>
+				<img src="data:image/png;base64,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">
+			</sup>
+		</h1>
+		<h3 id="user_name" class="color_white"></h3>
+
+		<div class="form-group input_div_room_page">
+			<label>#Add Room:</label>
+			<input type="text" id="room_name" class="form-control" placeholder="#Room Name">
+		</div>
+		
+		<button onclick="addRoom();" class="btn btn-success">#Add Room</button>
+
+		<h3 class="color_white">#TRENDINGROOMS</h3>
+
+		<div id="output"></div>
+		
+	</center>
+</div>
+
+
+<script src="kwitter_room.js"></script>
+</body>
+</html>
